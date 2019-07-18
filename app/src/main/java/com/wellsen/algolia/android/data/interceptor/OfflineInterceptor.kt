@@ -4,31 +4,25 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response
+
 
 /**
  * Project algolia.
  *
  * Created by wellsen on 2019-07-18.
  */
-
-const val ONE_WEEK = 60 * 60 * 24 * 7
-
 class OfflineInterceptor(private val application: Application) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val requestBuilder = chain.request().newBuilder()
-
-        val cacheControl = if (isNetworkConnected(application)) {
-            "public, max-age=" + 15
-        } else {
-            "public, only-if-cached, max-stale=$ONE_WEEK"
+        val builder = chain.request().newBuilder()
+        if (!isNetworkConnected(application)) {
+            builder.cacheControl(CacheControl.FORCE_CACHE)
         }
 
-        requestBuilder.header("Cache-Control", cacheControl)
-
-        return chain.proceed(requestBuilder.build())
+        return chain.proceed(builder.build())
     }
 
 }
