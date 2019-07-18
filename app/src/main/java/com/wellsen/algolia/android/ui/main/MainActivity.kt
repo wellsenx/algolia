@@ -35,21 +35,6 @@ class MainActivity : BindingActivity<ActivityMainBinding>() {
             }
         })
 
-        binding.sv.setOnSearchClickListener {
-        }
-
-        binding.sv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                vm.fetchNews(newText)
-
-                return false
-            }
-        })
-
     }
 
 }
