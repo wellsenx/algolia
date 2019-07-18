@@ -2,6 +2,7 @@ package com.wellsen.algolia.android
 
 import android.app.Application
 import com.wellsen.algolia.android.module.networkModule
+import com.wellsen.algolia.android.module.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -26,7 +27,8 @@ class AlgoliaApplication : Application() {
             }
             modules(
                 listOf(
-                    networkModule
+                    networkModule,
+                    viewModelModule
                 )
             )
         }
